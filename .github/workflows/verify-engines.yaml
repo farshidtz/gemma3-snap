@@ -14,7 +14,6 @@ jobs:
         with:
           lfs: true
           submodules: true
-          token: ${{ secrets.SUBMODULE_PAT }}
 
       - name: Set up Go
         uses: actions/setup-go@v6
