@@ -26,11 +26,13 @@ slots:
        - &status-share $SNAP_DATA/share/status
 
 environment:
-  # Workaround until it gets set by snapd
+  # Path to access current revision of components
   SNAP_COMPONENTS: /snap/$SNAP_INSTANCE_NAME/components/$SNAP_REVISION
   # This is to find the intel.icd file, containing the path to libigdrcl.so
   # Required for Intel GPU detection and communication
   OCL_ICD_VENDORS: $SNAP/etc/OpenCL/vendors
+  # To find shared libraries that are staged and moved to components
+  ARCH_TRIPLET: $CRAFT_ARCH_TRIPLET_BUILD_FOR
   # Status directory shared via content interface
   STATUS_SHARE: *status-share
 
@@ -305,22 +307,17 @@ apps:
     command: bin/server.sh
     daemon: simple
     plugs:
-      # For inference and hardware detection (via init)
+      # For inference and hardware detection
       - opengl
-      # Needed by for cuda-uvmfd to listen on a unix socket?
-      # Needed for server app by inheritance
+      # Needed to bind on network interfaces
       - network-bind
       # Needed to download resources
       - network
-      # For hardware detection (via init)
+      # For hardware detection
       - hardware-observe
       # For sideloading models
       - home
       # Intel NPU access (device node)
       - intel-npu 
       # Intel NPU access (libs) 
-      - npu-libs  
-    environment:
-      # Needed for shared libraries used by llama.cpp
-      # TODO: Should this instead be added in an env file to llamacpp component
-      ARCH_TRIPLET: $CRAFT_ARCH_TRIPLET_BUILD_FOR
+      - npu-libs
