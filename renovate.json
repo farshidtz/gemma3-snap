@@ -2,5 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
-  ]
+  ],
+    "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["(^|/)snapcraft\\.yaml$"],
+      "matchStrings": [
+        "source-tag: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: versioning=(?<versioning>.*?))?\\s"
+      ]
+    }
+    ]
 }
