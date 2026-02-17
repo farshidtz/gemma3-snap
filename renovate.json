@@ -28,7 +28,7 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "jpm-canonical/llama.cpp-builds",
-      "versioningTemplate": "semver"
+      "versioningTemplate": "loose"
     }
   ]
 }
