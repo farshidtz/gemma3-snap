@@ -13,7 +13,7 @@
       "matchStrings": [
         "source:\\s*https://github\\.com/canonical/inference-snaps-cli\\.git\\s*\\n\\s*source-tag:\\s*(?<currentValue>[^\\s]+)"
       ],
-      "datasourceTemplate": "github-tags",
+      "datasourceTemplate": "github-releases",
       "depNameTemplate": "canonical/inference-snaps-cli",
       "versioningTemplate": "semver"
     },
@@ -27,7 +27,7 @@
         "https://github\\.com/jpm-canonical/llama\\.cpp-builds/releases/download/(?<currentValue>[^/]+)/llamacpp-[^\\s]+\\.tar\\.gz",
         "(?ms)^\\s*llamacpp[^:]*:\\s*$\\n(?:^\\s+.*$\\n)*?^\\s*version:\\s*(?<currentValue>b\\d+)\\s*$"
       ],
-      "datasourceTemplate": "github-tags",
+      "datasourceTemplate": "github-releases",
       "depNameTemplate": "jpm-canonical/llama.cpp-builds",
       "versioningTemplate": "regex:^b(?<major>\\d+)$"
     }
