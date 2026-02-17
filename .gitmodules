@@ -1,6 +1,3 @@
 [submodule "dev"]
 	path = dev
 	url = https://github.com/canonical/inference-snaps-dev
-[submodule "llama.cpp-builds"]
-	path = llama.cpp-builds
-	url = https://github.com/jpm-canonical/llama.cpp-builds.git
