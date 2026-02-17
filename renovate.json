@@ -25,10 +25,29 @@
       ],
       "matchStrings": [
         "https://github\\.com/jpm-canonical/llama\\.cpp-builds/releases/download/(?<currentValue>[^/]+)/llamacpp-[^\\s]+\\.tar\\.gz",
+        {
+          "summary": "Regular expression pattern to match and extract llama.cpp version from YAML configuration",
+          "description": "This regex pattern is designed to match a multi-line YAML block that contains a 'llamacpp' key followed by a 'version' field. It captures the version value in the 'currentValue' named group.",
+          "pattern_breakdown": {
+            "(?ms)": "Flags - 'm' enables multiline mode (^ and $ match line boundaries), 's' enables dotall mode (. matches newlines)",
+            "^\\s*llamacpp": "Matches 'llamacpp' at the start of a line with optional leading whitespace",
+            "[^:]*:": "Matches any characters except colon, followed by a colon (handles potential suffixes after 'llamacpp')",
+            "\\s*$\\n": "Matches trailing whitespace and newline after the colon",
+            "(?:^\\s+.*$\\n)*?": "Non-capturing group that matches zero or more indented lines (properties between 'llamacpp' and 'version'), using non-greedy matching",
+            "^\\s*version:": "Matches 'version:' at the start of a line with optional leading whitespace",
+            "\\s*(?<currentValue>b\\d+)": "Captures the version value in 'currentValue' group, expecting format 'b' followed by one or more digits",
+            "\\s*$": "Matches optional trailing whitespace until end of line"
+          },
+          "captured_groups": {
+            "currentValue": "The version string in format 'bXXXX' where XXXX are digits (e.g., 'b1234')"
+          },
+          "example_match": "llamacpp:\n  some-property: value\n  version: b4321"
+        }
         "(?ms)^\\s*llamacpp[^:]*:\\s*$\\n(?:^\\s+.*$\\n)*?^\\s*version:\\s*(?<currentValue>b\\d+)\\s*$"
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "jpm-canonical/llama.cpp-builds",
+      "allowedVersions": "^b\\d+$",
       "versioningTemplate": "regex:^b(?<major>\\d+)$"
     }
   ]
