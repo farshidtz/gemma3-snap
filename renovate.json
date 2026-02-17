@@ -3,13 +3,19 @@
   "extends": [
     "config:recommended"
   ],
-    "customManagers": [
+  "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["(^|/)snapcraft\\.yaml$"],
+      "description": "Update inference-snaps-cli source-tag in snapcraft.yaml",
+      "fileMatch": [
+        "^snap/snapcraft\\.yaml$"
+      ],
       "matchStrings": [
-        "source-tag: (?<currentValue>.*?)\\s+# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)(?: versioning=(?<versioning>.*?))?\\s"
-      ]
+        "source:\\s*https://github\\.com/canonical/inference-snaps-cli\\.git\\s*\\n\\s*source-tag:\\s*(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "canonical/inference-snaps-cli",
+      "versioningTemplate": "semver"
     }
-    ]
+  ]
 }
