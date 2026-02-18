@@ -24,12 +24,25 @@
         "^snap/snapcraft\\.yaml$"
       ],
       "matchStrings": [
-        "https://github\\.com/jpm-canonical/llama\\.cpp-builds/releases/download/(?<currentValue>[^/]+)/llamacpp-[^\\s]+\\.tar\\.gz",
+        "https://github\\.com/jpm-canonical/llama\\.cpp-builds/releases/download/(?<currentValue>[^/]+)/llamacpp",
         "(?ms)^\\s*llamacpp[^:]*:\\s*$\\n(?:^\\s+.*$\\n)*?^\\s*version:\\s*(?<currentValue>b\\d+)\\s*$"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "jpm-canonical/llama.cpp-builds",
       "versioningTemplate": "regex:^b(?<major>\\d+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update openvino-model-server",
+      "fileMatch": [
+        "^snap/snapcraft\\.yaml$"
+      ],
+      "matchStrings": [
+        "https://github\\.com/openvinotoolkit/model_server/releases/download/(?<currentValue>v[^/]+)/ovms"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "openvinotoolkit/model_server",
+      "versioningTemplate": "semver"
     }
   ]
 }
