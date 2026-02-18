@@ -42,7 +42,7 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "openvinotoolkit/model_server",
-      "versioningTemplate": "semver"
+      "versioningTemplate": "loose"
     }
   ]
 }
