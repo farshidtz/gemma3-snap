@@ -78,8 +78,11 @@ parts:
   scripts:
     source: scripts
     plugin: dump
+    stage-packages:
+      - jq
     organize:
-      "*": bin/
+      "server.sh": bin/
+      "completion.bash": bin/
 
   engines:
     source: engines
@@ -103,35 +106,13 @@ parts:
     plugin: nil
     stage-packages:
       - pciutils # lspci
-      - nvidia-utils-580 # nvidia-smi, NVIDIA vRAM and CUDA Capability detection
-      - clinfo # Intel GPU vRAM detection
+      - nvidia-utils-580 # nvidia-smi, used for NVIDIA vRAM and CUDA Capability detection
+      - clinfo # used for Intel GPU vRAM detection. It depends on intel-opencl-icd
     prime:
       # Exclude nvidia icd to avoid clinfo from looking up properties for nvidia GPUs.
       # See: https://github.com/canonical/inference-snaps/issues/148
       - -etc/OpenCL/vendors/nvidia.icd
     
-  jq:
-    plugin: nil
-    stage-packages:
-      - jq
-
-  local-component-files:
-    plugin: dump
-    source: components
-    organize:
-      "llamacpp/*": (component/llamacpp)
-      "llamacpp-cuda/*": (component/llamacpp-cuda)
-      "llamacpp-rocm/*": (component/llamacpp-rocm)
-      "mmproj-f16-4b-gguf/*": (component/mmproj-f16-4b-gguf)
-      "model-4b-it-int4-fq-ov/*": (component/model-4b-it-int4-fq-ov)
-      "model-270m-it-q4-0-gguf/*": (component/model-270m-it-q4-0-gguf)
-      "model-4b-it-q4-0-gguf/*": (component/model-4b-it-q4-0-gguf)
-      "openvino-model-server/*": (component/openvino-model-server)
-      # Add other components here
-    prime:
-      # Exclude everything not explicitly organized
-      - -*
-
   # OpenCL ICD and libigdgmm are required for Intel GPU vRAM lookup with clinfo
   intel-opencl-icd:
     plugin: nil
@@ -157,6 +138,23 @@ parts:
       fi
       
       craftctl default
+
+  local-component-files:
+    plugin: dump
+    source: components
+    organize:
+      "llamacpp/*": (component/llamacpp)
+      "llamacpp-cuda/*": (component/llamacpp-cuda)
+      "llamacpp-rocm/*": (component/llamacpp-rocm)
+      "mmproj-f16-4b-gguf/*": (component/mmproj-f16-4b-gguf)
+      "model-4b-it-int4-fq-ov/*": (component/model-4b-it-int4-fq-ov)
+      "model-270m-it-q4-0-gguf/*": (component/model-270m-it-q4-0-gguf)
+      "model-4b-it-q4-0-gguf/*": (component/model-4b-it-q4-0-gguf)
+      "openvino-model-server/*": (component/openvino-model-server)
+      # Add other components here
+    prime:
+      # Exclude everything not explicitly organized
+      - -*
 
   llamacpp:
     plugin: dump
